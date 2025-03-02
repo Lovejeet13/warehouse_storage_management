@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table td input[type="radio"] {
+            transform: scale(1.2);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Search Results for Warehouses</h1>
+
+    <form action="/store_crop" method="POST">
+        <label for="farmer_name">Farmer Name:</label>
+        <input type="text" name="farmer_name" required placeholder="Enter Farmer's Name">
+
+        <label for="state">State:</label>
+        <input type="text" name="state" value="{{ state }}" readonly>
+
+        <label for="district">District:</label>
+        <input type="text" name="district" required placeholder="Enter District">
+
+        <label for="crop_name">Crop Name:</label>
+        <input type="text" name="crop_name" value="{{ crop_name }}" readonly>
+
+        <label for="quantity">Quantity (kg):</label>
+        <input type="number" name="quantity" value="{{ quantity }}" readonly>
+
+        <h2>Available Warehouses</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Warehouse Name</th>
+                    <th>Address</th>
+                    <th>Warehouse Mobile No</th>
+                    <th>Price Per Kg</th>
+                    <th>Total Price</th>
+                    <th>Select</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warehouse in warehouses %}
+                    <tr>
+                        <td>{{ warehouse['warehouse_name'] }}</td>
+                        <td>{{ warehouse['address'] }}</td>
+                        <td>{{ warehouse['mobile_number'] }}</td>
+                        <td>{{ warehouse['price_per_kg'] }}</td>
+                        <td>{{ warehouse['total_price'] }}</td>
+                        <td>
+                            <input type="radio" name="warehouse_id" value="{{ warehouse['id'] }}" required>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="submit">Store Crop</button>
+    </form>
+
+    {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>

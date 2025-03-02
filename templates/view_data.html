@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Stored Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #ddd;
+        }
+        .no-data {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+            margin: 20px;
+        }
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            text-align: center;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Stored Data</h1>
+
+    {% if data %}
+    <table>
+        <thead>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Farmer Name</th>
+                <th>State</th>
+                <th>District</th>
+                <th>Crop Name</th>
+                <th>Warehouse Name</th>
+                <th>Address</th>
+                <th>Warehouse Mobile Number</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{ loop.index0 + 1 }}</td>
+                    <td>{{ row.farmer_name }}</td>
+                    <td>{{ row.state }}</td>
+                    <td>{{ row.district }}</td>
+                    <td>{{ row.crop_name }}</td>
+                    <td>{{ row.warehouse_name }}</td>
+                    <td>{{ row.address }}</td>
+                    <td>{{ row.mobile_number }}</td>
+                    <td>{{ row.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-data">No records found.</p>
+    {% endif %}
+
+    <a href="/" class="back-button">Back to Home</a>
+
+</body>
+</html>
